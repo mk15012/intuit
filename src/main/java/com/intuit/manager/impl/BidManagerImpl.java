@@ -78,6 +78,9 @@ public class BidManagerImpl implements BidManager {
                 .toList();
 
         Long userId = winnerSelectionStrategy.determineWinner(eligibleBids);
+        if(Objects.isNull(userId))
+            return null;
+
         return userManager.getUserById(userId);
     }
 
