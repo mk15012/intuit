@@ -86,6 +86,10 @@ public class ProductControllerImpl implements ProductController {
 
     private void validateRequest(ProductEntry productEntry) throws Exception {
         UserEntry userEntry = userManager.getUserById(productEntry.getUserId());
+        if (Objects.isNull(userEntry)) {
+            throw new Exception("No such user found");
+        }
+
         if (!UserType.VENDOR.equals(userEntry.getUserType())) {
             throw new Exception("Only vendors can add products.");
         }
