@@ -6,6 +6,6 @@ public interface UserManager {
 
     UserEntry getUserById(Long userId);
 
-    UserEntry addUser(UserEntry user);
+    UserEntry addUser(UserEntry user) throws Exception;
 
 }

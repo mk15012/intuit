@@ -28,7 +28,7 @@ public class UserControllerImpl implements UserController {
             response.setData(Collections.singletonList(entry));
             response.setStatus(new StatusResponse(1, StatusResponse.Type.SUCCESS, Objects.isNull(entry) ? 0 : 1));
         } catch (Exception ex) {
-            response.setStatus(new StatusResponse(0, "An unexpected error occurred", StatusResponse.Type.ERROR));
+            response.setStatus(new StatusResponse(0, "Error adding new user", StatusResponse.Type.ERROR));
         }
         return response;
     }

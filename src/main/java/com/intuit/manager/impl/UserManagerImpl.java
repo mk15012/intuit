@@ -19,16 +19,16 @@ public class UserManagerImpl implements UserManager {
         return convertToEntry(user);
     }
 
-    public UserEntry addUser(UserEntry userEntry) {
+    public UserEntry addUser(UserEntry userEntry) throws Exception {
         userRepository.save(convertToEntity(userEntry));
         return userEntry;
     }
 
     private User convertToEntity(UserEntry userEntry) {
         User user = new User();
-        user.setId(userEntry.getId());
         user.setName(userEntry.getName());
         user.setUserType(userEntry.getUserType().name());
+        user.setEmail(userEntry.getEmail());
         return user;
     }
 
