@@ -13,7 +13,7 @@ public interface ProductManager {
 
     ProductEntry getProductById(Long productId);
 
-    List<ProductEntry> getAllProducts();
+    List<ProductEntry> getAllProducts(int offset, int fetchSize);
 
     List<ProductEntry> findEndedSlots(LocalDateTime currentTime);
 

@@ -49,7 +49,7 @@ public class ProductControllerImpl implements ProductController {
         try {
             List<ProductEntry> productEntries = productManager.getProductsByCategory(category);
             response.setData(productEntries);
-            response.setStatus(new StatusResponse(1, StatusResponse.Type.SUCCESS, Objects.isNull(productEntries) ? 0 : 1));
+            response.setStatus(new StatusResponse(1, StatusResponse.Type.SUCCESS, Objects.isNull(productEntries) ? 0 : productEntries.size()));
         } catch (Exception e) {
             response.setStatus(new StatusResponse(0, e.getMessage(), StatusResponse.Type.ERROR));
         }
@@ -71,13 +71,13 @@ public class ProductControllerImpl implements ProductController {
     }
 
     @Override
-    public ProductResponse getAllProducts() {
+    public ProductResponse getAllProducts(int offset, int fetchSize) {
 
         ProductResponse response = new ProductResponse();
         try {
-            List<ProductEntry> productEntries = productManager.getAllProducts();
+            List<ProductEntry> productEntries = productManager.getAllProducts(offset, fetchSize);
             response.setData(productEntries);
-            response.setStatus(new StatusResponse(1, StatusResponse.Type.SUCCESS, Objects.isNull(productEntries) ? 0 : 1));
+            response.setStatus(new StatusResponse(1, StatusResponse.Type.SUCCESS, Objects.isNull(productEntries) ? 0 : productEntries.size()));
         } catch (Exception e) {
             response.setStatus(new StatusResponse(0, e.getMessage(), StatusResponse.Type.ERROR));
         }

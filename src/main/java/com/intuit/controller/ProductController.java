@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,6 +24,7 @@ public interface ProductController {
     ProductResponse getProductsByCategory(@PathVariable String category);
 
     @GetMapping("/getAllProducts")
-    ProductResponse getAllProducts();
+    ProductResponse getAllProducts(@RequestParam(defaultValue = "0") int offset,
+                                   @RequestParam(defaultValue = "-1") int fetchSize);
 
 }

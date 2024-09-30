@@ -48,13 +48,12 @@ public class ProductManagerImpl implements ProductManager {
     }
 
     @Override
-    public List<ProductEntry> getAllProducts() {
-        List<Product> productList = productRepository.getAllProducts();
-        List<ProductEntry> result = new ArrayList<>();
-        for (Product product : productList) {
-            result.add(convertToEntry(product));
+    public List<ProductEntry> getAllProducts(int offset, int fetchSize) {
+        if (fetchSize == -1) {
+            fetchSize = (int) productRepository.count() - offset;
         }
-        return result;
+        List<Product> productList = productRepository.getAllProducts(offset, fetchSize);
+        return productList.stream().map(this::convertToEntry).collect(Collectors.toList());
     }
 
     private Product convertToEntity(ProductEntry productEntry) {

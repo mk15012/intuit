@@ -57,7 +57,7 @@ public class BidControllerImpl implements BidController {
         try {
             List<BidEntry> bidEntries = bidManager.getBidsForProduct(productId);
             response.setData(bidEntries);
-            response.setStatus(new StatusResponse(1, StatusResponse.Type.SUCCESS, Objects.isNull(bidEntries) ? 0 : 1));
+            response.setStatus(new StatusResponse(1, StatusResponse.Type.SUCCESS, Objects.isNull(bidEntries) ? 0 : bidEntries.size()));
         } catch (Exception e) {
             response.setStatus(new StatusResponse(0, e.getMessage(), StatusResponse.Type.ERROR));
         }
