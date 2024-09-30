@@ -94,5 +94,9 @@ public class ProductControllerImpl implements ProductController {
             throw new Exception("Only vendors can add products.");
         }
 
+        if (productEntry.getStartTime().isAfter(productEntry.getEndTime())) {
+            throw new Exception("Bid start time should be less than end time.");
+        }
+
     }
 }
