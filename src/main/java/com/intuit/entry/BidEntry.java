@@ -18,5 +18,6 @@ public class BidEntry {
     private Long userId;
     private double amount;
     private LocalDateTime bidTime;
+    private boolean communicationSent;
 
 }

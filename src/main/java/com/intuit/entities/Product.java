@@ -22,6 +22,6 @@ public class Product extends BaseEntity {
     private double basePrice;
     private LocalDateTime slotStart;
     private LocalDateTime slotEnd;
-    private String vendorId;
+    private Long vendorId;
 
 }

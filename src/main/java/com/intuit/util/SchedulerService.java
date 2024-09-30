@@ -21,15 +21,24 @@ public class SchedulerService {
     @Autowired
     private BidManager bidManager;
 
+    @Scheduled(fixedDelay = 60000) // Retry every 60 seconds
+    public void retryFailedNotifications() {
+        bidManager.resendFailedCommunications();
+    }
+
+
     @Scheduled(fixedRate = 60000) // Run every minute
     public void checkForEndedSlots() {
         List<ProductEntry> productList = productManager.findEndedSlots(LocalDateTime.now());
         for (ProductEntry product : productList) {
             UserEntry userEntry = bidManager.determineWinner(product.getId());
-            if(Objects.isNull(userEntry)) {
+            if (Objects.isNull(userEntry)) {
                 System.out.println("No winner for product: " + product.getName());
             } else {
-                sendNotification(userEntry.getEmail(), product.getName(), userEntry.getId());
+                if (!bidManager.isCommunicationSent(product.getId())) {
+                    sendNotification(userEntry.getEmail(), product.getName(), userEntry.getId());
+                    bidManager.markCommunicationSent(product.getId());
+                }
             }
         }
     }

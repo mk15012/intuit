@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface BidRepository extends JpaRepository<Bid, Long> {
 
-    @Query(value = "select * from bid where product_id = :productId", nativeQuery = true)
+    @Query(value = "select * from bids where product_id = :productId", nativeQuery = true)
     List<Bid> getBidsForProduct(Long productId);
 
+    List<Bid> findByCommunicationSentFalse();
 }

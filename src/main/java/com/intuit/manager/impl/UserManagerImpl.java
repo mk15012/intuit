@@ -36,6 +36,7 @@ public class UserManagerImpl implements UserManager {
         return UserEntry.builder()
                 .id(user.getId())
                 .name(user.getName())
+                .email(user.getEmail())
                 .build();
     }
 

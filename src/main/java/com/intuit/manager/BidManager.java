@@ -14,4 +14,10 @@ public interface BidManager {
     List<BidEntry> getBidsForProduct(Long productId);
 
     UserEntry determineWinner(Long productId);
+
+    void resendFailedCommunications();
+
+    boolean isCommunicationSent(Long productId);
+
+    void markCommunicationSent(Long productId);
 }

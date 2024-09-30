@@ -69,6 +69,7 @@ public class ProductManagerImpl implements ProductManager {
 
     private ProductEntry convertToEntry(Product product) {
         ProductEntry productEntry = new ProductEntry();
+        productEntry.setId(product.getId());
         productEntry.setName(product.getName());
         productEntry.setBasePrice(product.getBasePrice());
         productEntry.setCategory(Category.valueOf(product.getCategory()));

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class BidManagerImpl implements BidManager {
@@ -73,10 +74,50 @@ public class BidManagerImpl implements BidManager {
                 .min(Comparator.comparing(BidEntry::getBidTime))
                 .orElse(null);
 
-        if (highestBid != null) {
+        if (Objects.nonNull(highestBid)) {
             return userManager.getUserById(highestBid.getUserId());
         }
         return null;
+    }
+
+    @Override
+    public void resendFailedCommunications() {
+        List<Bid> failedBids = bidRepository.findByCommunicationSentFalse();
+        for (Bid bid : failedBids) {
+            UserEntry user = userManager.getUserById(bid.getUserId());
+            if (isWinner(bid)) {
+                sendNotification(user.getEmail(), "Congratulations! You won the bid for product " + bid.getProductId());
+            } else {
+                sendNotification(user.getEmail(), "Sorry, you couldn't make it for product " + bid.getProductId());
+            }
+            bid.setCommunicationSent(true);
+            bidRepository.save(bid);
+        }
+    }
+
+    @Override
+    public boolean isCommunicationSent(Long productId) {
+        List<Bid> bids = bidRepository.getBidsForProduct(productId);
+        return bids.stream().anyMatch(Bid::isCommunicationSent);
+    }
+
+    @Override
+    public void markCommunicationSent(Long productId) {
+        List<Bid> bids = bidRepository.getBidsForProduct(productId);
+        for (Bid bid : bids) {
+            bid.setCommunicationSent(true);
+            bidRepository.save(bid);
+        }
+    }
+
+    private boolean isWinner(Bid bid) {
+        UserEntry winner = determineWinner(bid.getProductId());
+        return winner != null && winner.getId().equals(bid.getUserId());
+    }
+
+    private void sendNotification(String email, String message) {
+        System.out.println("Sending email to: " + email);
+        System.out.println("Message: " + message);
     }
 
     private void validateBiddingRequest(BidEntry bidEntry) throws Exception {
@@ -102,6 +143,7 @@ public class BidManagerImpl implements BidManager {
                 .userId(bid.getUserId())
                 .amount(bid.getAmount())
                 .productId(bid.getProductId())
+                .communicationSent(bid.isCommunicationSent())
                 .build();
     }
 }

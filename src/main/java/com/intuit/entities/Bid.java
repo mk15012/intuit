@@ -21,5 +21,6 @@ public class Bid extends BaseEntity {
     private LocalDateTime bidTime;
     private Long productId;
     private Long userId;
+    private boolean communicationSent;
 
 }
