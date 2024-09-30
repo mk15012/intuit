@@ -21,13 +21,13 @@ public class SchedulerService {
     @Autowired
     private BidManager bidManager;
 
-    @Scheduled(fixedDelay = 60000) // Retry every 60 seconds
+    @Scheduled(fixedDelay = 60000)
     public void retryFailedNotifications() {
         bidManager.resendFailedCommunications();
     }
 
 
-    @Scheduled(fixedRate = 60000) // Run every minute
+    @Scheduled(fixedRate = 60000)
     public void checkForEndedSlots() {
         List<ProductEntry> productList = productManager.findEndedSlots(LocalDateTime.now());
         for (ProductEntry product : productList) {
