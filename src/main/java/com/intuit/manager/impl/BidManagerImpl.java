@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class BidManagerImpl implements BidManager {
@@ -122,6 +123,11 @@ public class BidManagerImpl implements BidManager {
 
     private void validateBiddingRequest(BidEntry bidEntry) throws Exception {
         ProductEntry productEntry = productManager.getProductById(bidEntry.getProductId());
+
+        if(Objects.isNull(productEntry)) {
+            throw new Exception("No such product found");
+        }
+
         if (bidEntry.getAmount() < productEntry.getBasePrice()) {
             throw new Exception("Bid amount must be higher than the base price.");
         }

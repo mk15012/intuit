@@ -1,5 +1,6 @@
 package com.intuit.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -17,11 +18,21 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Product extends BaseEntity {
 
+    @Column(name = "name")
     private String name;
-    private String category;
-    private double basePrice;
-    private LocalDateTime slotStart;
-    private LocalDateTime slotEnd;
-    private Long vendorId;
 
+    @Column(name = "category")
+    private String category;
+
+    @Column(name = "base_price", nullable = false)
+    private double basePrice;
+
+    @Column(name = "slot_start", nullable = false)
+    private LocalDateTime slotStart;
+
+    @Column(name = "slot_end", nullable = false)
+    private LocalDateTime slotEnd;
+
+    @Column(name = "vendor_id")
+    private Long vendorId;
 }
