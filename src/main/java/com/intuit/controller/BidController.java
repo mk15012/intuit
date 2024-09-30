@@ -3,6 +3,7 @@ package com.intuit.controller;
 import com.intuit.entry.BidEntry;
 import com.intuit.response.BidResponse;
 import com.intuit.response.UserResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 public interface BidController {
 
     @GetMapping("/{bidId}")
-    BidResponse getBidById(@PathVariable Long bidId);
+    ResponseEntity<BidResponse> getBidById(@PathVariable Long bidId);
 
     @PostMapping("/placeBid")
-    BidResponse placeBid(@RequestBody BidEntry bidEntry) throws Exception;
+    ResponseEntity<BidResponse> placeBid(@RequestBody BidEntry bidEntry) throws Exception;
 
     @GetMapping("/getBidsByProduct/{productId}")
-    BidResponse getBidsByProduct(@PathVariable Long productId);
+    ResponseEntity<BidResponse> getBidsByProduct(@PathVariable Long productId);
 
     @GetMapping("/winner/{productId}")
-    UserResponse determineWinner(@PathVariable Long productId);
+    ResponseEntity<UserResponse> determineWinner(@PathVariable Long productId);
 
 }

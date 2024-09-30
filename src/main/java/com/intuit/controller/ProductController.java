@@ -2,6 +2,7 @@ package com.intuit.controller;
 
 import com.intuit.entry.ProductEntry;
 import com.intuit.response.ProductResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,16 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 public interface ProductController {
 
     @GetMapping("/{productId}")
-    ProductResponse getProductsById(@PathVariable Long productId);
+    ResponseEntity<ProductResponse> getProductsById(@PathVariable Long productId);
 
     @PostMapping("/addProduct")
-    ProductResponse addProduct(@RequestBody ProductEntry productEntry);
+    ResponseEntity<ProductResponse> addProduct(@RequestBody ProductEntry productEntry);
 
     @GetMapping("/getProductsByCategory/{category}")
-    ProductResponse getProductsByCategory(@PathVariable String category);
+    ResponseEntity<ProductResponse> getProductsByCategory(@PathVariable String category);
 
     @GetMapping("/getAllProducts")
-    ProductResponse getAllProducts(@RequestParam(defaultValue = "0") int offset,
-                                   @RequestParam(defaultValue = "-1") int fetchSize);
+    ResponseEntity<ProductResponse> getAllProducts(@RequestParam(defaultValue = "0") int offset,
+                                                   @RequestParam(defaultValue = "-1") int fetchSize);
 
 }
