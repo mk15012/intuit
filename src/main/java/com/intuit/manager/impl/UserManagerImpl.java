@@ -2,6 +2,7 @@ package com.intuit.manager.impl;
 
 import com.intuit.entities.User;
 import com.intuit.entry.UserEntry;
+import com.intuit.enums.UserType;
 import com.intuit.exception.EntityNotFoundException;
 import com.intuit.manager.UserManager;
 import com.intuit.repository.UserRepository;
@@ -37,6 +38,7 @@ public class UserManagerImpl implements UserManager {
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
+                .userType(UserType.valueOf(user.getUserType()))
                 .build();
     }
 
