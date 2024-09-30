@@ -2,7 +2,6 @@ package com.intuit.manager;
 
 import com.intuit.entry.BidEntry;
 import com.intuit.entry.UserEntry;
-import com.intuit.strategy.WinnerSelectionStrategy;
 
 import java.util.List;
 
@@ -14,9 +13,7 @@ public interface BidManager {
 
     List<BidEntry> getBidsForProduct(Long productId);
 
-    UserEntry determineWinner(Long productId);
-
-    void resendFailedCommunications();
+    UserEntry determineWinner(Long productId) throws Exception;
 
     boolean isCommunicationSent(Long productId);
 

@@ -36,7 +36,7 @@ public class SchedulerServiceTest {
     private SchedulerService schedulerService;
 
     @Test
-    public void testCheckForEndedSlots() {
+    public void testCheckForEndedSlots() throws Exception {
         // Arrange
         ProductEntry product = new ProductEntry();
         product.setId(1L);
