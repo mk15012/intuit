@@ -8,6 +8,7 @@ import com.intuit.manager.BidManager;
 import com.intuit.response.BidResponse;
 import com.intuit.response.StatusResponse;
 import com.intuit.response.UserResponse;
+import com.intuit.strategy.WinnerSelectionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

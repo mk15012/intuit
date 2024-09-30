@@ -1,6 +1,5 @@
 package com.intuit.manager.impl;
 
-
 import com.intuit.entities.Bid;
 import com.intuit.entry.BidEntry;
 import com.intuit.entry.ProductEntry;
@@ -10,19 +9,23 @@ import com.intuit.manager.BidManager;
 import com.intuit.manager.ProductManager;
 import com.intuit.manager.UserManager;
 import com.intuit.repository.BidRepository;
+import com.intuit.strategy.WinnerSelectionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 @Component
 public class BidManagerImpl implements BidManager {
 
     @Autowired
     private ProductManager productManager;
+
+    @Autowired
+    @Qualifier("randomSelectionStrategy")
+    private WinnerSelectionStrategy winnerSelectionStrategy;
 
     @Autowired
     private UserManager userManager;
@@ -69,15 +72,12 @@ public class BidManagerImpl implements BidManager {
                 .max()
                 .orElse(0);
 
-        BidEntry highestBid = bids.stream()
+        List<BidEntry> eligibleBids = bids.stream()
                 .filter(bid -> bid.getAmount() == highestAmount)
-                .min(Comparator.comparing(BidEntry::getBidTime))
-                .orElse(null);
+                .toList();
 
-        if (Objects.nonNull(highestBid)) {
-            return userManager.getUserById(highestBid.getUserId());
-        }
-        return null;
+        Long userId = winnerSelectionStrategy.determineWinner(eligibleBids);
+        return userManager.getUserById(userId);
     }
 
     @Override

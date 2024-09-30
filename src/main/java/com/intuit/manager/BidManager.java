@@ -2,6 +2,7 @@ package com.intuit.manager;
 
 import com.intuit.entry.BidEntry;
 import com.intuit.entry.UserEntry;
+import com.intuit.strategy.WinnerSelectionStrategy;
 
 import java.util.List;
 
